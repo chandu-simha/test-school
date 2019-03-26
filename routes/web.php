@@ -11,37 +11,12 @@
 |
 */
 
-//putEnv("TML_URL=".env('APP_URL').'/'.env('TMP_NAME'));
+Route::get('/', function () {
+	activity()
+   //->performedOn($anEloquentModel)
+   //->causedBy('1234567890')
+   ->withProperties(['customProperty' => 'customValue'])
+   ->log('Look, I logged something');
 
-Auth::routes(['register' => false]);
-
-
-Route::get('/home', function () {
-	return view('main');
+    return view('welcome');
 });
-
-Route::middleware(['auth'])->group(function () {
-	Route::middleware(['super_admin'])->group(function () {
-		Route::get('/', function () {
-	return view('main');
-});
-
-		Route::get('register', 'Auth\RegisterController@showRegistrationForm');
-
-		Route::post('register', [ 'as' => 'register', 'uses' => 'Auth\RegisterController@register']);
-	});
-	
-	Route::middleware(['school_admin'])->group(function () {    
-	});
-
-	Route::middleware(['teacher'])->group(function () {
-	});
-
-	Route::middleware(['student'])->group(function () {
-	});
-
-	Route::middleware(['parent'])->group(function () {
-	});
-});
-
-

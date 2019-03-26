@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Http\Traits\UtilityTrait;
 
 class RegisterController extends Controller
 {
@@ -23,7 +22,6 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-    use UtilityTrait;
 
     /**
      * Where to redirect users after registration.
@@ -51,7 +49,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -66,20 +64,9 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'userid'        => substr(uniqid(mt_rand(), true), 0, 10),
-            'fk_role_id'    => 1,
-            'username'      => $data['username'],
-            'mobile'        => $data['mobile'],
-            'first_name'    => $data['first_name'],
-            'last_name'     => '',//$data['last_name'],
-            'gender'        => '',//$data['gender'],
-            //'dob'           => '',//$data['dob'],
-            'ip'            => $this->ip(),
-            'profile_image' => '',
-            'status'        => 1,
-            'created'       => time(),
-            'email'         => $data['email'],
-            'password'      => Hash::make($data['password']),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
         ]);
     }
 }

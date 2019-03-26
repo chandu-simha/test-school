@@ -13,13 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-         if (!Schema::hasTable('users')) {
+        if (!Schema::hasTable('users')) {
             Schema::create('users', function (Blueprint $table) {
                 $table->string('userid', 50);
-                $table->primary('userid');
-                //$table->integer('fk_school_id')->nullable();
-                //$table->smallInteger('fk_role_id')->nullable()->comment('1:Admin, 2:School admin, 3:Teacher, 4:Student, 5:Parent');
-                //$table->foreign('fk_role_id')->references('id')->on('roles');
+                $table->integer('fk_school_id', 11)->nullable();
+                $table->integer('fk_role_id', 2)->default(3)->comment('1:Admin, 2:School admin, 3:Teacher, 4:Student, 5:Parent');
                 $table->string('username', 100)->unique();
                 $table->string('password');
                 $table->string('email')->unique();
@@ -29,14 +27,14 @@ class CreateUsersTable extends Migration
                 $table->string('usno', 100)->nullable();
                 $table->char('gender', 1)->nullable();
                 $table->date('dob')->nullable();
-                $table->ipAddress('ip')->nullable();
+                $table->string('ip')->nullable();
                 $table->string('profile_image')->nullable();
-                $table->string('parent_mail')->nullable();
+                $table->sting('parent_mail')->nullable();
                 $table->tinyInteger('status')->default(0);
                 $table->timestamp('email_verified_at')->nullable();
                 $table->rememberToken();
-                $table->unsignedInteger('created')->nullable();
-                $table->unsignedInteger('modified')->nullable();
+                $table->integer('created')->nullable();
+                $table->integer('modified')->nullable();
             });
         }
     }
